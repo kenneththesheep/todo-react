@@ -76,26 +76,31 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div class = "col-12 ">
 
-        <div className="item">
+        <div className="item row">
+        <div className = "col-6 border">
         <p>Input: {this.state.inputlist}</p>
         <input value={this.state.inputlist} onChange={(event)=>{this.changeHandler(event);}}></input>
 
         <p>Welcome. Creating a todo again</p>
         <button onClick={()=>{this.handleClick()}}>click me!</button>
-
+        </div>
+<div className="col-6 border">
         <p> To do List</p>
         <ol>
         {this.state.todolist.map((thingsToDo, index) =>
             <div>
+            <div className = "row">
             <li>Things to do: {thingsToDo} <br/> Time created: {this.state.todomoment[index]}</li>
 
             <button id={index} onClick={(event)=>{this.deleteClick(event)}}>Remove item {index+1}</button>
             </div>
+            </div>
 
             )}
         </ol>
+        </div>
         </div>
 
 
