@@ -1,6 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
-
+import moment from 'moment'
 class App extends React.Component {
         constructor(){
       super();
@@ -11,14 +11,15 @@ class App extends React.Component {
       this.state = {
         counter:0,
         inputlist:"",
-        todolist:[]
+        todolist:[],
+        todomoment:[]
       };
     }
 
     // our click method
     handleClick()
         {
-
+            console.log(moment());
             if(this.state.inputlist.length>0 && this.state.inputlist.length<200)
             {
                         var currentValue = this.state.counter + 1;
@@ -29,7 +30,11 @@ class App extends React.Component {
                         currentToDoArray.push (this.state.inputlist);
                         console.log(currentToDoArray);
                         this.setState({todolist: currentToDoArray});
-                        console.log(this.state.todolist);
+                        var currentToDoMomentArray = this.state.todomoment;
+                        currentToDoMomentArray.push(moment().format());
+                        console.log(currentToDoMomentArray);
+                        this.setState({todomoment: currentToDoMomentArray});
+                        console.log(this.state.todomoment);
                         var inputValue = "";
                         this.setState({inputlist:inputValue});
                         console.log(this.state.inputValue)
@@ -62,6 +67,10 @@ class App extends React.Component {
             currentToDoArray.splice(event.target.id, 1);
             this.setState({todolist: currentToDoArray});
 
+            var currentToDoTimeArray = this.state.todomoment;
+            currentToDoTimeArray.splice(event.target.id, 1);
+            this.setState({todomoment: currentToDoTimeArray});
+
 
         }
 
@@ -76,12 +85,13 @@ class App extends React.Component {
         <p>Welcome. Creating a todo again</p>
         <button onClick={()=>{this.handleClick()}}>click me!</button>
 
+        <p> To do List</p>
         <ol>
         {this.state.todolist.map((thingsToDo, index) =>
             <div>
-            <li>{thingsToDo}</li>
+            <li>Things to do: {thingsToDo} <br/> Time created: {this.state.todomoment[index]}</li>
 
-            <button id={index} onClick={(event)=>{this.deleteClick(event)}}>Delete item {index+1}</button>
+            <button id={index} onClick={(event)=>{this.deleteClick(event)}}>Remove item {index+1}</button>
             </div>
 
             )}
