@@ -52,6 +52,19 @@ class App extends React.Component {
             console.log("change", event.target.value);
         }
 
+
+    deleteClick(event)
+        {
+
+            console.log("delete");
+            console.log(event.target.id)
+            var currentToDoArray = this.state.todolist;
+            currentToDoArray.splice(event.target.id, 1);
+            this.setState({todolist: currentToDoArray});
+
+
+        }
+
   render() {
     return (
       <div>
@@ -59,12 +72,21 @@ class App extends React.Component {
         <div className="item">
         <p>Input: {this.state.inputlist}</p>
         <input value={this.state.inputlist} onChange={(event)=>{this.changeHandler(event);}}></input>
-      </div>
+
         <p>Welcome. Creating a todo again</p>
         <button onClick={()=>{this.handleClick()}}>click me!</button>
+
         <ol>
-        {this.state.todolist.map(thingsToDo=><li>{thingsToDo}</li>)}
+        {this.state.todolist.map((thingsToDo, index) =>
+            <div>
+            <li>{thingsToDo}</li>
+
+            <button id={index} onClick={(event)=>{this.deleteClick(event)}}>Delete item {index+1}</button>
+            </div>
+
+            )}
         </ol>
+        </div>
 
 
       </div>
