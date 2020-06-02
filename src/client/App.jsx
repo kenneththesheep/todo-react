@@ -3,6 +3,7 @@ import { hot } from 'react-hot-loader';
 import moment from 'moment'
 import Form from './components/form/Form'
 import Todo from './components/todo/Todo'
+import Complete from './components/completed/Complete'
 
 let something = "Something";
 class App extends React.Component {
@@ -22,60 +23,13 @@ class App extends React.Component {
     }
 
     // our click method
-    handleClick()
-        {
-
-            console.log(moment());
-            console.log(something)
-            if(something.length>0 && something.length<200)
-            {
-                        var currentValue = this.state.counter + 1;
-                        console.log("clicking", currentValue);
-                        // set the state of this component
-                        this.setState( { counter: currentValue } );
-                        var currentToDoArray = this.state.todolist;
-                        currentToDoArray.push (something);
-                        console.log(currentToDoArray);
-                        this.setState({todolist: currentToDoArray});
-                        var currentToDoMomentArray = this.state.todomoment;
-                        currentToDoMomentArray.push(moment().format());
-                        console.log(currentToDoMomentArray);
-                        this.setState({todomoment: currentToDoMomentArray});
-                        console.log(this.state.todomoment);
-                        something = "";
-
-                    }
-                    else if(something.length<=0)
-                    {
-                        alert("Too short")
-                    }
-                    else if(something.length>=200)
-                    {
-                        alert("Too Long")
-                    }
-
-
-        }
 
 
 
 
 
-    deleteClick(event)
-        {
-
-            console.log("delete");
-            console.log(event.target.id)
-            var currentToDoArray = this.state.todolist;
-            currentToDoArray.splice(event.target.id, 1);
-            this.setState({todolist: currentToDoArray});
-
-            var currentToDoTimeArray = this.state.todomoment;
-            currentToDoTimeArray.splice(event.target.id, 1);
-            this.setState({todomoment: currentToDoTimeArray});
 
 
-        }
 
         myCallBack(data)
         {
@@ -187,6 +141,7 @@ class App extends React.Component {
 
 
     return (
+        <div>
       <div class = "col-12 ">
 
         <div className="item row">
@@ -217,6 +172,10 @@ class App extends React.Component {
         </div>
 
 
+      </div>
+      <Complete
+      finishArray = {this.state.completedtask}
+      />
       </div>
     );
   }
