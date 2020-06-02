@@ -1,6 +1,10 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import moment from 'moment'
+import Form from './components/form/Form'
+import Todo from './components/todo/Todo'
+
+let something = "Something";
 class App extends React.Component {
         constructor(){
       super();
@@ -19,15 +23,17 @@ class App extends React.Component {
     // our click method
     handleClick()
         {
+
             console.log(moment());
-            if(this.state.inputlist.length>0 && this.state.inputlist.length<200)
+            console.log(something)
+            if(something.length>0 && something.length<200)
             {
                         var currentValue = this.state.counter + 1;
                         console.log("clicking", currentValue);
                         // set the state of this component
                         this.setState( { counter: currentValue } );
                         var currentToDoArray = this.state.todolist;
-                        currentToDoArray.push (this.state.inputlist);
+                        currentToDoArray.push (something);
                         console.log(currentToDoArray);
                         this.setState({todolist: currentToDoArray});
                         var currentToDoMomentArray = this.state.todomoment;
@@ -35,15 +41,14 @@ class App extends React.Component {
                         console.log(currentToDoMomentArray);
                         this.setState({todomoment: currentToDoMomentArray});
                         console.log(this.state.todomoment);
-                        var inputValue = "";
-                        this.setState({inputlist:inputValue});
-                        console.log(this.state.inputValue)
+                        something = "";
+
                     }
-                    else if(this.state.inputlist.length<=0)
+                    else if(something.length<=0)
                     {
                         alert("Too short")
                     }
-                    else if(this.state.inputlist.length>=200)
+                    else if(something.length>=200)
                     {
                         alert("Too Long")
                     }
@@ -51,11 +56,8 @@ class App extends React.Component {
 
         }
 
-    changeHandler(event)
-        {
-            this.setState({inputlist:event.target.value});
-            console.log("change", event.target.value);
-        }
+
+
 
 
     deleteClick(event)
@@ -74,32 +76,131 @@ class App extends React.Component {
 
         }
 
+        myCallBack(data)
+        {
+            console.log("Look over here heerer herhehrehrehrherf")
+            console.log(data);
+            something = data.toDoList;
+
+
+
+        }
+
   render() {
+
+    const changeHandler = event => {
+    //console.log(`Target value ${event.target.value}`)
+        this.setState({inputlist:event.target.value});
+
+    };
+
+    const textChecker = textToCheck =>{
+
+    }
+
+        const handleClick = event => {
+    console.log(`Target value ${event}`)
+    if(event)
+    {
+        console.log(this.state.inputlist)
+        console.log("Something really happened")
+
+        if(this.state.inputlist.length>0 && this.state.inputlist.length<200)
+            {
+                        var currentValue = this.state.counter + 1;
+                        console.log("clicking", currentValue);
+                        // set the state of this component
+                        this.setState( { counter: currentValue } );
+                        var currentToDoArray = this.state.todolist;
+                        currentToDoArray.push (this.state.inputlist);
+                        console.log(currentToDoArray);
+                        this.setState({todolist: currentToDoArray});
+                        var currentToDoMomentArray = this.state.todomoment;
+                        currentToDoMomentArray.push(moment().format());
+                        console.log(currentToDoMomentArray);
+                        this.setState({todomoment: currentToDoMomentArray});
+                        console.log(this.state.todomoment);
+                        this.state.inputlist = "";
+
+            }
+        else if(this.state.inputlist.length<=0)
+            {
+                    alert("Too short")
+            }
+        else if(this.state.inputlist.length>=200)
+            {
+                    alert("Too Long")
+            }
+    }
+    };
+
+
+    const changeEditHandler=(event)=>{
+
+
+           if(event)
+    {
+        console.log(this.state.inputlist)
+        console.log("Something really happened")
+
+        if(event.target.value.length>0 && event.target.value.length<200)
+            {
+                console.log("Now also here")
+                console.log(typeof event.target.id)
+                console.log(this.state.todolist)
+                let edittedArray = this.state.todolist;
+
+                edittedArray[event.target.id] = event.target.value;
+                this.setState({todolist: edittedArray})
+
+            }
+        else if(event.target.value.length<=0)
+            {
+                    alert("Too short")
+            }
+        else if(event.target.value.length>=200)
+            {
+                    alert("Too Long")
+            }
+    }
+
+    }
+const handleDeleteClick = (Event)=>{
+
+}
+
+
+
+
+
+
     return (
       <div class = "col-12 ">
 
         <div className="item row">
         <div className = "col-6 border">
-        <p>Input: {this.state.inputlist}</p>
-        <input value={this.state.inputlist} onChange={(event)=>{this.changeHandler(event);}}></input>
+        <p>Below is for the function to call back function</p>
 
-        <p>Welcome. Creating a todo again</p>
-        <button onClick={()=>{this.handleClick()}}>click me!</button>
+        <Form
+        callBackFromForm = {changeHandler.bind(this)}
+        clickFormButton = {handleClick}
+        />
+
         </div>
+
+
+
+
+
+
 <div className="col-6 border">
-        <p> To do List</p>
-        <ol>
-        {this.state.todolist.map((thingsToDo, index) =>
-            <div>
-            <div className = "row">
-            <li>Things to do: {thingsToDo} <br/> Time created: {this.state.todomoment[index]}</li>
+        <Todo
+            toDoArray = {this.state.todolist}
+            momentArray = {this.state.todomoment}
+            callBackFromEditForm = {changeEditHandler.bind(this)}
+            clickDeleteButton = {handleDeleteClick}
+        />
 
-            <button id={index} onClick={(event)=>{this.deleteClick(event)}}>Remove item {index+1}</button>
-            </div>
-            </div>
-
-            )}
-        </ol>
         </div>
         </div>
 
