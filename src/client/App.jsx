@@ -16,7 +16,8 @@ class App extends React.Component {
         counter:0,
         inputlist:"",
         todolist:[],
-        todomoment:[]
+        todomoment:[],
+        completedtask:[]
       };
     }
 
@@ -94,9 +95,7 @@ class App extends React.Component {
 
     };
 
-    const textChecker = textToCheck =>{
 
-    }
 
         const handleClick = event => {
     console.log(`Target value ${event}`)
@@ -134,7 +133,7 @@ class App extends React.Component {
     }
     };
 
-
+//This is for editing the form
     const changeEditHandler=(event)=>{
 
 
@@ -152,6 +151,9 @@ class App extends React.Component {
 
                 edittedArray[event.target.id] = event.target.value;
                 this.setState({todolist: edittedArray})
+                let momentArray = this.state.todomoment;
+                momentArray[event.target.id] = moment().format();
+                this.setState({todomoment: momentArray});
 
             }
         else if(event.target.value.length<=0)
@@ -165,9 +167,19 @@ class App extends React.Component {
     }
 
     }
-const handleDeleteClick = (Event)=>{
-
-}
+    const handleDeleteClick = (Event)=>{
+        console.log("Deleteing ")
+        console.log(Event.target.id);
+        let completedTask = this.state.completedtask;
+        var currentToDoArray = this.state.todolist;
+        completedTask.push(currentToDoArray.splice(Event.target.id, 1));
+        this.setState({todolist: currentToDoArray});
+        this.setState({completedtask: completedTask});
+        var currentToDoTimeArray = this.state.todomoment;
+        currentToDoTimeArray.splice(Event.target.id, 1);
+        this.setState({todomoment: currentToDoTimeArray});
+        console.log(completedTask)
+    }
 
 
 

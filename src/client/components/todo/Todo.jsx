@@ -26,10 +26,10 @@ class Todo extends React.Component {
             //console.log("change", event.target.value);
         }
 
-        handleDeleteClick(event)
+        deleteClick(event)
         {
 
-            //this.props.clickFormButton(event);
+            this.props.clickDeleteButton(event);
             //refer to the input box with ref inputBox
             //this.setState({toDoList:""});
             //this.refs.inputBox.value = "";
@@ -50,13 +50,14 @@ class Todo extends React.Component {
         <ol>
         {john.map((thingsToDo, index) =>
             <div>
-            <div className = "row">
+            <div className = "row mb-3">
 
 
-            <li><input id={index} value={thingsToDo} ref="inputBox" onChange={(event)=>{this.changeEditHandler(event);}}></input></li>
+            <li><input id={index} value={thingsToDo} ref="inputBox" onChange={(event)=>{this.changeEditHandler(event);}}></input> <p>{momentArray[index]}</p></li>
 
 
             <button id={index} onClick={(event)=>{this.deleteClick(event)}}>Remove item {index+1}</button>
+
             </div>
             </div>
 
