@@ -20,6 +20,9 @@ class App extends React.Component {
         todomoment:[],
         completedtask:[]
       };
+
+
+
     }
 
     // our click method
@@ -49,7 +52,20 @@ class App extends React.Component {
 
     };
 
-
+    const timesUp = index =>{
+        console.log("here here herer")
+        console.log(index);
+        console.log(this.state.counter)
+        let completedTask = this.state.completedtask;
+        var currentToDoArray = this.state.todolist;
+        completedTask.push(currentToDoArray.splice(index, 1));
+        this.setState({todolist: currentToDoArray});
+        this.setState({completedtask: completedTask});
+        var currentToDoTimeArray = this.state.todomoment;
+        currentToDoTimeArray.splice(index, 1);
+        this.setState({todomoment: currentToDoTimeArray});
+        console.log(completedTask)
+    };
 
         const handleClick = event => {
     console.log(`Target value ${event}`)
@@ -74,6 +90,27 @@ class App extends React.Component {
                         this.setState({todomoment: currentToDoMomentArray});
                         console.log(this.state.todomoment);
                         this.state.inputlist = "";
+                        let counter = this.state.counter;
+                        let momentarray = this.state.todomoment;
+
+                        var fiveSecondTimeoutReference = setInterval(function() {
+                          console.log('Ding!');
+                          console.log(counter);
+                           console.log(momentarray);
+                          momentarray.forEach((time,index)=>{
+                            //console.log(time);
+                            //console.log(index)
+                            console.log(moment().format())
+                            console.log("Time difference");
+                            let a = moment();
+                            let b = moment(time);
+                            //test for 20 seconds
+                            if(a.diff(b, 'seconds')>20)
+                            {
+                                timesUp(index);
+                            }
+                          })
+                        }, 5000);
 
             }
         else if(this.state.inputlist.length<=0)
